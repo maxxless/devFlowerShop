@@ -97,7 +97,7 @@ export const CollectionInCartUpdate = (props: ICollectionInCartUpdateProps) => {
                   {collections
                     ? collections.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}
@@ -110,7 +110,7 @@ export const CollectionInCartUpdate = (props: ICollectionInCartUpdateProps) => {
                   {packings
                     ? packings.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}

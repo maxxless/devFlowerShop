@@ -9,13 +9,6 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "order",
-            "otherEntityRelationshipName": "flowerInOrder",
-            "relationshipName": "order",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
             "otherEntityName": "colour",
             "otherEntityRelationshipName": "flowerInOrder",
             "relationshipName": "colour",
@@ -26,6 +19,13 @@
             "otherEntityName": "flower",
             "otherEntityRelationshipName": "flowerInOrder",
             "relationshipName": "flower",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "order",
+            "otherEntityRelationshipName": "flowerDetails",
+            "relationshipName": "order",
             "otherEntityField": "id"
         }
     ],

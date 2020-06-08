@@ -1,5 +1,6 @@
 package com.team.flowershop.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.io.Serializable
 import javax.persistence.*
@@ -18,13 +19,13 @@ data class FlowerInOrder(
     var amount: Int? = null,
 
     @ManyToOne @JsonIgnoreProperties("flowerInOrders")
-    var order: Order? = null,
-
-    @ManyToOne @JsonIgnoreProperties("flowerInOrders")
     var colour: Colour? = null,
 
     @ManyToOne @JsonIgnoreProperties("flowerInOrders")
-    var flower: Flower? = null
+    var flower: Flower? = null,
+
+    @ManyToOne @JsonIgnore
+    var order: Order? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 ) : Serializable {

@@ -27,6 +27,18 @@
             "otherEntityField": "id",
             "ownerSide": true,
             "useJPADerivedIdentifier": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "collectionInCart",
+            "otherEntityRelationshipName": "cart",
+            "relationshipName": "collectionDetails"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "flowerInCart",
+            "otherEntityRelationshipName": "cart",
+            "relationshipName": "flowerDetails"
         }
     ],
     "changelogDate": "20200608191200",

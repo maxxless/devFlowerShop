@@ -24,7 +24,7 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "order",
-            "otherEntityRelationshipName": "collectionInOrder",
+            "otherEntityRelationshipName": "collectionDetails",
             "relationshipName": "order",
             "otherEntityField": "id"
         }

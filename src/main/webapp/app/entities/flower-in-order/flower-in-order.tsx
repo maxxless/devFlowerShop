@@ -67,9 +67,9 @@ export const FlowerInOrder = (props: IFlowerInOrderProps) => {
               <tr>
                 <th>ID</th>
                 <th>Amount</th>
-                <th>Order</th>
                 <th>Colour</th>
                 <th>Flower</th>
+                <th>Order</th>
                 <th />
               </tr>
             </thead>
@@ -82,9 +82,9 @@ export const FlowerInOrder = (props: IFlowerInOrderProps) => {
                     </Button>
                   </td>
                   <td>{flowerInOrder.amount}</td>
+                  <td>{flowerInOrder.colour ? <Link to={`colour/${flowerInOrder.colour.id}`}>{flowerInOrder.colour.id}</Link> : ''}</td>
+                  <td>{flowerInOrder.flower ? <Link to={`flower/${flowerInOrder.flower.id}`}>{flowerInOrder.flower.id}</Link> : ''}</td>
                   <td>{flowerInOrder.order ? <Link to={`order/${flowerInOrder.order.id}`}>{flowerInOrder.order.id}</Link> : ''}</td>
-                  <td>{flowerInOrder.colour ? <Link to={`colour/${flowerInOrder.colour.id}`}>{flowerInOrder.colour.name}</Link> : ''}</td>
-                  <td>{flowerInOrder.flower ? <Link to={`flower/${flowerInOrder.flower.id}`}>{flowerInOrder.flower.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${flowerInOrder.id}`} color="info" size="sm">

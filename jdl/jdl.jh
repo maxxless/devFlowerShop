@@ -98,6 +98,10 @@ relationship OneToOne {
 
 relationship OneToMany {
  	Category{collections} to Collection{category}
+ 	Order{collectionDetails} to CollectionInOrder{order}
+ 	Order{flowerDetails} to FlowerInOrder{order}
+ 	Cart{collectionDetails} to CollectionInCart{cart}
+    Cart{flowerDetails} to FlowerInCart{cart}
 }
 
 relationship ManyToOne {
@@ -106,14 +110,10 @@ relationship ManyToOne {
     Order{packing} to Packing
     CollectionInOrder{collection} to Collection
     CollectionInOrder{packing} to Packing
-    CollectionInOrder{order} to Order{collectionDetails}
-    FlowerInOrder{order} to Order{flowerDetails}
     FlowerInOrder{colour} to Colour
     FlowerInOrder{flower} to Flower
     CollectionInCart{collection} to Collection
     CollectionInCart{packing} to Packing
-    CollectionInCart{cart} to Cart{collectionDetails}
-    FlowerInCart{cart} to Cart{flowerDetails}
     FlowerInCart{colour} to Colour
     FlowerInCart{flower} to Flower
 }

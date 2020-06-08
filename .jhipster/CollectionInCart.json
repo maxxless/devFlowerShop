@@ -24,7 +24,7 @@
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "cart",
-            "otherEntityRelationshipName": "collectionInCart",
+            "otherEntityRelationshipName": "collectionDetails",
             "relationshipName": "cart",
             "otherEntityField": "id"
         }

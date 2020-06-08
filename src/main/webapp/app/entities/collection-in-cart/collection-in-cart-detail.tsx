@@ -30,9 +30,9 @@ export const CollectionInCartDetail = (props: ICollectionInCartDetailProps) => {
           </dt>
           <dd>{collectionInCartEntity.amount}</dd>
           <dt>Collection</dt>
-          <dd>{collectionInCartEntity.collection ? collectionInCartEntity.collection.name : ''}</dd>
+          <dd>{collectionInCartEntity.collection ? collectionInCartEntity.collection.id : ''}</dd>
           <dt>Packing</dt>
-          <dd>{collectionInCartEntity.packing ? collectionInCartEntity.packing.name : ''}</dd>
+          <dd>{collectionInCartEntity.packing ? collectionInCartEntity.packing.id : ''}</dd>
           <dt>Cart</dt>
           <dd>{collectionInCartEntity.cart ? collectionInCartEntity.cart.id : ''}</dd>
         </dl>

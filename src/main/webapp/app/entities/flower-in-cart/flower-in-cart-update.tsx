@@ -7,12 +7,12 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ICart } from 'app/shared/model/cart.model';
-import { getEntities as getCarts } from 'app/entities/cart/cart.reducer';
 import { IColour } from 'app/shared/model/colour.model';
 import { getEntities as getColours } from 'app/entities/colour/colour.reducer';
 import { IFlower } from 'app/shared/model/flower.model';
 import { getEntities as getFlowers } from 'app/entities/flower/flower.reducer';
+import { ICart } from 'app/shared/model/cart.model';
+import { getEntities as getCarts } from 'app/entities/cart/cart.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './flower-in-cart.reducer';
 import { IFlowerInCart } from 'app/shared/model/flower-in-cart.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -21,12 +21,12 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IFlowerInCartUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const FlowerInCartUpdate = (props: IFlowerInCartUpdateProps) => {
-  const [cartId, setCartId] = useState('0');
   const [colourId, setColourId] = useState('0');
   const [flowerId, setFlowerId] = useState('0');
+  const [cartId, setCartId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { flowerInCartEntity, carts, colours, flowers, loading, updating } = props;
+  const { flowerInCartEntity, colours, flowers, carts, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/flower-in-cart');
@@ -39,9 +39,9 @@ export const FlowerInCartUpdate = (props: IFlowerInCartUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getCarts();
     props.getColours();
     props.getFlowers();
+    props.getCarts();
   }, []);
 
   useEffect(() => {
@@ -91,26 +91,13 @@ export const FlowerInCartUpdate = (props: IFlowerInCartUpdateProps) => {
                 <AvField id="flower-in-cart-amount" type="string" className="form-control" name="amount" />
               </AvGroup>
               <AvGroup>
-                <Label for="flower-in-cart-cart">Cart</Label>
-                <AvInput id="flower-in-cart-cart" type="select" className="form-control" name="cart.id">
-                  <option value="" key="0" />
-                  {carts
-                    ? carts.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="flower-in-cart-colour">Colour</Label>
                 <AvInput id="flower-in-cart-colour" type="select" className="form-control" name="colour.id">
                   <option value="" key="0" />
                   {colours
                     ? colours.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}
@@ -123,7 +110,20 @@ export const FlowerInCartUpdate = (props: IFlowerInCartUpdateProps) => {
                   {flowers
                     ? flowers.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="flower-in-cart-cart">Cart</Label>
+                <AvInput id="flower-in-cart-cart" type="select" className="form-control" name="cart.id">
+                  <option value="" key="0" />
+                  {carts
+                    ? carts.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}
@@ -148,9 +148,9 @@ export const FlowerInCartUpdate = (props: IFlowerInCartUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  carts: storeState.cart.entities,
   colours: storeState.colour.entities,
   flowers: storeState.flower.entities,
+  carts: storeState.cart.entities,
   flowerInCartEntity: storeState.flowerInCart.entity,
   loading: storeState.flowerInCart.loading,
   updating: storeState.flowerInCart.updating,
@@ -158,9 +158,9 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getCarts,
   getColours,
   getFlowers,
+  getCarts,
   getEntity,
   updateEntity,
   createEntity,

@@ -12,6 +12,18 @@
     ],
     "relationships": [
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "collectionInOrder",
+            "otherEntityRelationshipName": "order",
+            "relationshipName": "collectionDetails"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "flowerInOrder",
+            "otherEntityRelationshipName": "order",
+            "relationshipName": "flowerDetails"
+        },
+        {
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "order",

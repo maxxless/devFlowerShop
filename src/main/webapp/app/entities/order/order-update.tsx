@@ -113,7 +113,7 @@ export const OrderUpdate = (props: IOrderUpdateProps) => {
                   {users
                     ? users.map((otherEntity, index) => (
                         <option value={index} key={otherEntity.id}>
-                          {otherEntity.firstName + ' ' + otherEntity.lastName}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}
@@ -126,7 +126,7 @@ export const OrderUpdate = (props: IOrderUpdateProps) => {
                   {packings
                     ? packings.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}

@@ -152,8 +152,8 @@ export const Order = (props: IOrderProps) => {
                   <td>
                     <TextFormat type="date" value={order.date} format={APP_DATE_FORMAT} />
                   </td>
-                  <td>{order.user ? order.user.firstName + ' ' + order.user.lastName : ''}</td>
-                  <td>{order.packing ? <Link to={`packing/${order.packing.id}`}>{order.packing.name}</Link> : ''}</td>
+                  <td>{order.user ? order.user.id : ''}</td>
+                  <td>{order.packing ? <Link to={`packing/${order.packing.id}`}>{order.packing.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${order.id}`} color="info" size="sm">

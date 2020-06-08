@@ -30,9 +30,9 @@ export const CollectionInOrderDetail = (props: ICollectionInOrderDetailProps) =>
           </dt>
           <dd>{collectionInOrderEntity.amount}</dd>
           <dt>Collection</dt>
-          <dd>{collectionInOrderEntity.collection ? collectionInOrderEntity.collection.name : ''}</dd>
+          <dd>{collectionInOrderEntity.collection ? collectionInOrderEntity.collection.id : ''}</dd>
           <dt>Packing</dt>
-          <dd>{collectionInOrderEntity.packing ? collectionInOrderEntity.packing.name : ''}</dd>
+          <dd>{collectionInOrderEntity.packing ? collectionInOrderEntity.packing.id : ''}</dd>
           <dt>Order</dt>
           <dd>{collectionInOrderEntity.order ? collectionInOrderEntity.order.id : ''}</dd>
         </dl>

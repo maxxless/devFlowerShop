@@ -29,10 +29,40 @@ data class Cart(
     @MapsId
     @JoinColumn(name = "id")
     @JsonIgnore
-    var user: User? = null
+    var user: User? = null,
+
+    @OneToMany(mappedBy = "cart")
+    var collectionDetails: MutableSet<CollectionInCart> = mutableSetOf(),
+
+    @OneToMany(mappedBy = "cart")
+    var flowerDetails: MutableSet<FlowerInCart> = mutableSetOf()
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 ) : Serializable {
+
+    fun addCollectionDetails(collectionInCart: CollectionInCart): Cart {
+        this.collectionDetails.add(collectionInCart)
+        collectionInCart.cart = this
+        return this
+    }
+
+    fun removeCollectionDetails(collectionInCart: CollectionInCart): Cart {
+        this.collectionDetails.remove(collectionInCart)
+        collectionInCart.cart = null
+        return this
+    }
+
+    fun addFlowerDetails(flowerInCart: FlowerInCart): Cart {
+        this.flowerDetails.add(flowerInCart)
+        flowerInCart.cart = this
+        return this
+    }
+
+    fun removeFlowerDetails(flowerInCart: FlowerInCart): Cart {
+        this.flowerDetails.remove(flowerInCart)
+        flowerInCart.cart = null
+        return this
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     override fun equals(other: Any?): Boolean {

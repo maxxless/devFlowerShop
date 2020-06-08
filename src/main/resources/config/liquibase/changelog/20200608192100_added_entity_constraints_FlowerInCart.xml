@@ -8,12 +8,6 @@
     -->
     <changeSet id="20200608192100-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="cart_id"
-                                 baseTableName="flower_in_cart"
-                                 constraintName="fk_flower_in_cart_cart_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="cart"/>
-
         <addForeignKeyConstraint baseColumnNames="colour_id"
                                  baseTableName="flower_in_cart"
                                  constraintName="fk_flower_in_cart_colour_id"
@@ -25,6 +19,12 @@
                                  constraintName="fk_flower_in_cart_flower_id"
                                  referencedColumnNames="id"
                                  referencedTableName="flower"/>
+
+        <addForeignKeyConstraint baseColumnNames="cart_id"
+                                 baseTableName="flower_in_cart"
+                                 constraintName="fk_flower_in_cart_cart_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cart"/>
 
     </changeSet>
 </databaseChangeLog>

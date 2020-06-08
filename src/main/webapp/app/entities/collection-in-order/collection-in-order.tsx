@@ -84,14 +84,14 @@ export const CollectionInOrder = (props: ICollectionInOrderProps) => {
                   <td>{collectionInOrder.amount}</td>
                   <td>
                     {collectionInOrder.collection ? (
-                      <Link to={`collection/${collectionInOrder.collection.id}`}>{collectionInOrder.collection.name}</Link>
+                      <Link to={`collection/${collectionInOrder.collection.id}`}>{collectionInOrder.collection.id}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {collectionInOrder.packing ? (
-                      <Link to={`packing/${collectionInOrder.packing.id}`}>{collectionInOrder.packing.name}</Link>
+                      <Link to={`packing/${collectionInOrder.packing.id}`}>{collectionInOrder.packing.id}</Link>
                     ) : (
                       ''
                     )}

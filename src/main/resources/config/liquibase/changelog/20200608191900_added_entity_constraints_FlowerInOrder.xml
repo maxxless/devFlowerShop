@@ -8,12 +8,6 @@
     -->
     <changeSet id="20200608191900-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="order_id"
-                                 baseTableName="flower_in_order"
-                                 constraintName="fk_flower_in_order_order_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_order"/>
-
         <addForeignKeyConstraint baseColumnNames="colour_id"
                                  baseTableName="flower_in_order"
                                  constraintName="fk_flower_in_order_colour_id"
@@ -25,6 +19,12 @@
                                  constraintName="fk_flower_in_order_flower_id"
                                  referencedColumnNames="id"
                                  referencedTableName="flower"/>
+
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="flower_in_order"
+                                 constraintName="fk_flower_in_order_order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_order"/>
 
     </changeSet>
 </databaseChangeLog>

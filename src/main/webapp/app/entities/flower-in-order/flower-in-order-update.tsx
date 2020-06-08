@@ -7,12 +7,12 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IOrder } from 'app/shared/model/order.model';
-import { getEntities as getOrders } from 'app/entities/order/order.reducer';
 import { IColour } from 'app/shared/model/colour.model';
 import { getEntities as getColours } from 'app/entities/colour/colour.reducer';
 import { IFlower } from 'app/shared/model/flower.model';
 import { getEntities as getFlowers } from 'app/entities/flower/flower.reducer';
+import { IOrder } from 'app/shared/model/order.model';
+import { getEntities as getOrders } from 'app/entities/order/order.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './flower-in-order.reducer';
 import { IFlowerInOrder } from 'app/shared/model/flower-in-order.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -21,12 +21,12 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IFlowerInOrderUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const FlowerInOrderUpdate = (props: IFlowerInOrderUpdateProps) => {
-  const [orderId, setOrderId] = useState('0');
   const [colourId, setColourId] = useState('0');
   const [flowerId, setFlowerId] = useState('0');
+  const [orderId, setOrderId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { flowerInOrderEntity, orders, colours, flowers, loading, updating } = props;
+  const { flowerInOrderEntity, colours, flowers, orders, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/flower-in-order');
@@ -39,9 +39,9 @@ export const FlowerInOrderUpdate = (props: IFlowerInOrderUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getOrders();
     props.getColours();
     props.getFlowers();
+    props.getOrders();
   }, []);
 
   useEffect(() => {
@@ -91,26 +91,13 @@ export const FlowerInOrderUpdate = (props: IFlowerInOrderUpdateProps) => {
                 <AvField id="flower-in-order-amount" type="string" className="form-control" name="amount" />
               </AvGroup>
               <AvGroup>
-                <Label for="flower-in-order-order">Order</Label>
-                <AvInput id="flower-in-order-order" type="select" className="form-control" name="order.id">
-                  <option value="" key="0" />
-                  {orders
-                    ? orders.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="flower-in-order-colour">Colour</Label>
                 <AvInput id="flower-in-order-colour" type="select" className="form-control" name="colour.id">
                   <option value="" key="0" />
                   {colours
                     ? colours.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}
@@ -123,7 +110,20 @@ export const FlowerInOrderUpdate = (props: IFlowerInOrderUpdateProps) => {
                   {flowers
                     ? flowers.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="flower-in-order-order">Order</Label>
+                <AvInput id="flower-in-order-order" type="select" className="form-control" name="order.id">
+                  <option value="" key="0" />
+                  {orders
+                    ? orders.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}
@@ -148,9 +148,9 @@ export const FlowerInOrderUpdate = (props: IFlowerInOrderUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  orders: storeState.order.entities,
   colours: storeState.colour.entities,
   flowers: storeState.flower.entities,
+  orders: storeState.order.entities,
   flowerInOrderEntity: storeState.flowerInOrder.entity,
   loading: storeState.flowerInOrder.loading,
   updating: storeState.flowerInOrder.updating,
@@ -158,9 +158,9 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getOrders,
   getColours,
   getFlowers,
+  getOrders,
   getEntity,
   updateEntity,
   createEntity,

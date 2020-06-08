@@ -23,6 +23,12 @@ data class Order(
     @Column(name = "date")
     var date: Instant? = null,
 
+    @OneToMany(mappedBy = "order")
+    var collectionDetails: MutableSet<CollectionInOrder> = mutableSetOf(),
+
+    @OneToMany(mappedBy = "order")
+    var flowerDetails: MutableSet<FlowerInOrder> = mutableSetOf(),
+
     @ManyToOne @JsonManagedReference("user-orders")
     var user: User? = null,
 
@@ -35,6 +41,30 @@ data class Order(
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 ) : Serializable {
+
+    fun addCollectionDetails(collectionInOrder: CollectionInOrder): Order {
+        this.collectionDetails.add(collectionInOrder)
+        collectionInOrder.order = this
+        return this
+    }
+
+    fun removeCollectionDetails(collectionInOrder: CollectionInOrder): Order {
+        this.collectionDetails.remove(collectionInOrder)
+        collectionInOrder.order = null
+        return this
+    }
+
+    fun addFlowerDetails(flowerInOrder: FlowerInOrder): Order {
+        this.flowerDetails.add(flowerInOrder)
+        flowerInOrder.order = this
+        return this
+    }
+
+    fun removeFlowerDetails(flowerInOrder: FlowerInOrder): Order {
+        this.flowerDetails.remove(flowerInOrder)
+        flowerInOrder.order = null
+        return this
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     override fun equals(other: Any?): Boolean {

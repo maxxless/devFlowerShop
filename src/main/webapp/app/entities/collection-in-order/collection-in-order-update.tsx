@@ -97,7 +97,7 @@ export const CollectionInOrderUpdate = (props: ICollectionInOrderUpdateProps) =>
                   {collections
                     ? collections.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}
@@ -110,7 +110,7 @@ export const CollectionInOrderUpdate = (props: ICollectionInOrderUpdateProps) =>
                   {packings
                     ? packings.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {otherEntity.id}
                         </option>
                       ))
                     : null}

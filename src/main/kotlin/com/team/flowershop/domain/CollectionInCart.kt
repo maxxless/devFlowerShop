@@ -1,5 +1,6 @@
 package com.team.flowershop.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.io.Serializable
 import javax.persistence.*
@@ -23,7 +24,7 @@ data class CollectionInCart(
     @ManyToOne @JsonIgnoreProperties("collectionInCarts")
     var packing: Packing? = null,
 
-    @ManyToOne @JsonIgnoreProperties("collectionInCarts")
+    @ManyToOne @JsonIgnore
     var cart: Cart? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

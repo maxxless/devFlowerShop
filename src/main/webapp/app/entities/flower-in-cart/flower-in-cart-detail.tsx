@@ -32,9 +32,9 @@ export const FlowerInCartDetail = (props: IFlowerInCartDetailProps) => {
           <dt>Cart</dt>
           <dd>{flowerInCartEntity.cart ? flowerInCartEntity.cart.id : ''}</dd>
           <dt>Colour</dt>
-          <dd>{flowerInCartEntity.colour ? flowerInCartEntity.colour.id : ''}</dd>
+          <dd>{flowerInCartEntity.colour ? flowerInCartEntity.colour.name : ''}</dd>
           <dt>Flower</dt>
-          <dd>{flowerInCartEntity.flower ? flowerInCartEntity.flower.id : ''}</dd>
+          <dd>{flowerInCartEntity.flower ? flowerInCartEntity.flower.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/flower-in-cart" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

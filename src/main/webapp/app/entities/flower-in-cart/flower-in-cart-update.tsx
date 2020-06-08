@@ -110,7 +110,7 @@ export const FlowerInCartUpdate = (props: IFlowerInCartUpdateProps) => {
                   {colours
                     ? colours.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}
@@ -123,7 +123,7 @@ export const FlowerInCartUpdate = (props: IFlowerInCartUpdateProps) => {
                   {flowers
                     ? flowers.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}

@@ -151,7 +151,7 @@ export const Delivery = (props: IDeliveryProps) => {
                   <td>{delivery.price}</td>
                   <td>{delivery.type}</td>
                   <td>{delivery.order ? <Link to={`order/${delivery.order.id}`}>{delivery.order.id}</Link> : ''}</td>
-                  <td>{delivery.user ? delivery.user.id : ''}</td>
+                  <td>{delivery.user ? delivery.user.firstName + ' ' + delivery.user.lastName : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${delivery.id}`} color="info" size="sm">

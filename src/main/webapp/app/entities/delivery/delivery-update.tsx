@@ -142,7 +142,7 @@ export const DeliveryUpdate = (props: IDeliveryUpdateProps) => {
                   {users
                     ? users.map((otherEntity, index) => (
                         <option value={index} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.firstName + ' ' + otherEntity.lastName}
                         </option>
                       ))
                     : null}

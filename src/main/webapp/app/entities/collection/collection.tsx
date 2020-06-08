@@ -189,7 +189,7 @@ export const Collection = (props: ICollectionProps) => {
                         </div>
                       ) : null}
                     </td>
-                    <td>{collection.category ? <Link to={`category/${collection.category.id}`}>{collection.category.id}</Link> : ''}</td>
+                    <td>{collection.category ? <Link to={`category/${collection.category.id}`}>{collection.category.name}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${collection.id}`} color="info" size="sm">

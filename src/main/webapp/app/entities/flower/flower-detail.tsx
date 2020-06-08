@@ -56,8 +56,8 @@ export const FlowerDetail = (props: IFlowerDetailProps) => {
           <dd>
             {flowerEntity.availableColours
               ? flowerEntity.availableColours.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
+                  <span key={val.name}>
+                    <a>{val.name}</a>
                     {i === flowerEntity.availableColours.length - 1 ? '' : ', '}
                   </span>
                 ))

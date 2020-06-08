@@ -56,8 +56,8 @@ export const CollectionDetail = (props: ICollectionDetailProps) => {
           <dd>
             {collectionEntity.availablePackings
               ? collectionEntity.availablePackings.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
+                  <span key={val.name}>
+                    <a>{val.name}</a>
                     {i === collectionEntity.availablePackings.length - 1 ? '' : ', '}
                   </span>
                 ))
@@ -67,15 +67,15 @@ export const CollectionDetail = (props: ICollectionDetailProps) => {
           <dd>
             {collectionEntity.flowers
               ? collectionEntity.flowers.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
+                  <span key={val.name}>
+                    <a>{val.name}</a>
                     {i === collectionEntity.flowers.length - 1 ? '' : ', '}
                   </span>
                 ))
               : null}
           </dd>
           <dt>Category</dt>
-          <dd>{collectionEntity.category ? collectionEntity.category.id : ''}</dd>
+          <dd>{collectionEntity.category ? collectionEntity.category.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/collection" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

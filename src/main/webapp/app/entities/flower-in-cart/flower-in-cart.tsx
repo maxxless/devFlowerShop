@@ -83,8 +83,8 @@ export const FlowerInCart = (props: IFlowerInCartProps) => {
                   </td>
                   <td>{flowerInCart.amount}</td>
                   <td>{flowerInCart.cart ? <Link to={`cart/${flowerInCart.cart.id}`}>{flowerInCart.cart.id}</Link> : ''}</td>
-                  <td>{flowerInCart.colour ? <Link to={`colour/${flowerInCart.colour.id}`}>{flowerInCart.colour.id}</Link> : ''}</td>
-                  <td>{flowerInCart.flower ? <Link to={`flower/${flowerInCart.flower.id}`}>{flowerInCart.flower.id}</Link> : ''}</td>
+                  <td>{flowerInCart.colour ? <Link to={`colour/${flowerInCart.colour.id}`}>{flowerInCart.colour.name}</Link> : ''}</td>
+                  <td>{flowerInCart.flower ? <Link to={`flower/${flowerInCart.flower.id}`}>{flowerInCart.flower.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${flowerInCart.id}`} color="info" size="sm">

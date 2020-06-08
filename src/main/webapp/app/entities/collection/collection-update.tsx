@@ -172,7 +172,7 @@ export const CollectionUpdate = (props: ICollectionUpdateProps) => {
                   {packings
                     ? packings.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}
@@ -192,7 +192,7 @@ export const CollectionUpdate = (props: ICollectionUpdateProps) => {
                   {flowers
                     ? flowers.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}
@@ -205,7 +205,7 @@ export const CollectionUpdate = (props: ICollectionUpdateProps) => {
                   {categories
                     ? categories.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}

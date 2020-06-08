@@ -84,14 +84,14 @@ export const CollectionInCart = (props: ICollectionInCartProps) => {
                   <td>{collectionInCart.amount}</td>
                   <td>
                     {collectionInCart.collection ? (
-                      <Link to={`collection/${collectionInCart.collection.id}`}>{collectionInCart.collection.id}</Link>
+                      <Link to={`collection/${collectionInCart.collection.id}`}>{collectionInCart.collection.name}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {collectionInCart.packing ? (
-                      <Link to={`packing/${collectionInCart.packing.id}`}>{collectionInCart.packing.id}</Link>
+                      <Link to={`packing/${collectionInCart.packing.id}`}>{collectionInCart.packing.name}</Link>
                     ) : (
                       ''
                     )}

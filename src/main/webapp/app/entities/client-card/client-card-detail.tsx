@@ -46,7 +46,7 @@ export const ClientCardDetail = (props: IClientCardDetailProps) => {
           </dt>
           <dd>{clientCardEntity.percentage}</dd>
           <dt>User</dt>
-          <dd>{clientCardEntity.user ? clientCardEntity.user.id : ''}</dd>
+          <dd>{clientCardEntity.user ? clientCardEntity.user.firstName + ' ' + clientCardEntity.user.lastName : ''}</dd>
         </dl>
         <Button tag={Link} to="/client-card" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

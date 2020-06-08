@@ -36,9 +36,9 @@ export const OrderDetail = (props: IOrderDetailProps) => {
             <TextFormat value={orderEntity.date} type="date" format={APP_DATE_FORMAT} />
           </dd>
           <dt>User</dt>
-          <dd>{orderEntity.user ? orderEntity.user.id : ''}</dd>
+          <dd>{orderEntity.user ? orderEntity.user.firstName + ' ' + orderEntity.user.lastName : ''}</dd>
           <dt>Packing</dt>
-          <dd>{orderEntity.packing ? orderEntity.packing.id : ''}</dd>
+          <dd>{orderEntity.packing ? orderEntity.packing.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/order" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

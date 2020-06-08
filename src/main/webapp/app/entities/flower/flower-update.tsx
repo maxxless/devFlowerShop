@@ -167,7 +167,7 @@ export const FlowerUpdate = (props: IFlowerUpdateProps) => {
                   {colours
                     ? colours.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}

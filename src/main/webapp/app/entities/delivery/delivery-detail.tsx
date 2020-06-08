@@ -44,7 +44,7 @@ export const DeliveryDetail = (props: IDeliveryDetailProps) => {
           <dt>Order</dt>
           <dd>{deliveryEntity.order ? deliveryEntity.order.id : ''}</dd>
           <dt>User</dt>
-          <dd>{deliveryEntity.user ? deliveryEntity.user.id : ''}</dd>
+          <dd>{deliveryEntity.user ? deliveryEntity.user.firstName + ' ' + deliveryEntity.user.lastName : ''}</dd>
         </dl>
         <Button tag={Link} to="/delivery" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

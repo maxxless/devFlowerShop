@@ -32,9 +32,9 @@ export const FlowerInOrderDetail = (props: IFlowerInOrderDetailProps) => {
           <dt>Order</dt>
           <dd>{flowerInOrderEntity.order ? flowerInOrderEntity.order.id : ''}</dd>
           <dt>Colour</dt>
-          <dd>{flowerInOrderEntity.colour ? flowerInOrderEntity.colour.id : ''}</dd>
+          <dd>{flowerInOrderEntity.colour ? flowerInOrderEntity.colour.name : ''}</dd>
           <dt>Flower</dt>
-          <dd>{flowerInOrderEntity.flower ? flowerInOrderEntity.flower.id : ''}</dd>
+          <dd>{flowerInOrderEntity.flower ? flowerInOrderEntity.flower.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/flower-in-order" replace color="info">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

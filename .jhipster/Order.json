@@ -1,0 +1,47 @@
+{
+    "name": "Order",
+    "fields": [
+        {
+            "fieldName": "totalPrice",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "order",
+            "relationshipName": "user",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "packing",
+            "otherEntityRelationshipName": "order",
+            "relationshipName": "packing",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "delivery",
+            "otherEntityRelationshipName": "order",
+            "relationshipName": "delivery",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20200608191500",
+    "entityTableName": "order",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

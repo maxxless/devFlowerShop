@@ -1,0 +1,43 @@
+{
+    "name": "CollectionInCart",
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "collection",
+            "otherEntityRelationshipName": "collectionInCart",
+            "relationshipName": "collection",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "packing",
+            "otherEntityRelationshipName": "collectionInCart",
+            "relationshipName": "packing",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "cart",
+            "otherEntityRelationshipName": "collectionInCart",
+            "relationshipName": "cart",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200608192200",
+    "entityTableName": "collection_in_cart",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

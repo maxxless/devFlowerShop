@@ -1,0 +1,43 @@
+{
+    "name": "CollectionInOrder",
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "collection",
+            "otherEntityRelationshipName": "collectionInOrder",
+            "relationshipName": "collection",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "packing",
+            "otherEntityRelationshipName": "collectionInOrder",
+            "relationshipName": "packing",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "order",
+            "otherEntityRelationshipName": "collectionInOrder",
+            "relationshipName": "order",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200608192000",
+    "entityTableName": "collection_in_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

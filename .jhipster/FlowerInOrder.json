@@ -1,0 +1,43 @@
+{
+    "name": "FlowerInOrder",
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "order",
+            "otherEntityRelationshipName": "flowerInOrder",
+            "relationshipName": "order",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "colour",
+            "otherEntityRelationshipName": "flowerInOrder",
+            "relationshipName": "colour",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "flower",
+            "otherEntityRelationshipName": "flowerInOrder",
+            "relationshipName": "flower",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200608191900",
+    "entityTableName": "flower_in_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,54 @@
+{
+    "name": "Delivery",
+    "fields": [
+        {
+            "fieldName": "address",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "postOfficeNumber",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "DeliveryType",
+            "fieldValues": "POST_OFFICE,COURIER,SELF_PICK_UP"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "order",
+            "otherEntityRelationshipName": "delivery",
+            "relationshipName": "order",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "useJPADerivedIdentifier": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "delivery",
+            "relationshipName": "user",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200608191600",
+    "entityTableName": "delivery",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

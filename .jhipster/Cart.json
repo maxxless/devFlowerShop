@@ -1,0 +1,43 @@
+{
+    "name": "Cart",
+    "fields": [
+        {
+            "fieldName": "totalPriceWithoutDiscount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "cardDiscount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "bonusDiscount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "finalPrice",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "cart",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "useJPADerivedIdentifier": true
+        }
+    ],
+    "changelogDate": "20200608191200",
+    "entityTableName": "cart",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,51 @@
+{
+    "name": "ClientCard",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "CardType",
+            "fieldValues": "BONUS,SOCIAL,GOLD"
+        },
+        {
+            "fieldName": "bonusAmount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "percentage",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "clientCard",
+            "relationshipName": "order",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "useJPADerivedIdentifier": true
+        }
+    ],
+    "changelogDate": "20200608191700",
+    "entityTableName": "client_card",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

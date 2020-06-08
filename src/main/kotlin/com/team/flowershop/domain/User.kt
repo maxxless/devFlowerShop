@@ -2,23 +2,15 @@ package com.team.flowershop.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.team.flowershop.config.LOGIN_REGEX
+import org.hibernate.annotations.BatchSize
 import java.io.Serializable
 import java.time.Instant
-import java.util.Locale
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.JoinTable
-import javax.persistence.ManyToMany
-import javax.persistence.Table
+import java.util.*
+import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
-import org.hibernate.annotations.BatchSize
 
 /**
  * A user.
@@ -77,6 +69,18 @@ class User @JvmOverloads constructor(
 
     @Column(name = "reset_date")
     var resetDate: Instant? = null,
+
+    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
+    var clientCard: ClientCard? = null,
+
+    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
+    var cart: Cart? = null,
+
+    @OneToMany(mappedBy = "user")
+    var orders: MutableSet<Order> = mutableSetOf(),
+
+    @OneToMany(mappedBy = "user")
+    var deliveries: MutableSet<Delivery> = mutableSetOf(),
 
     @JsonIgnore
     @ManyToMany

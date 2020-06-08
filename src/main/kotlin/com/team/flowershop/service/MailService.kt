@@ -1,10 +1,9 @@
 package com.team.flowershop.service
 
+import com.team.flowershop.domain.Delivery
+import com.team.flowershop.domain.Order
 import com.team.flowershop.domain.User
 import io.github.jhipster.config.JHipsterProperties
-import java.nio.charset.StandardCharsets
-import java.util.Locale
-import javax.mail.MessagingException
 import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource
 import org.springframework.mail.MailException
@@ -14,6 +13,9 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import org.thymeleaf.context.Context
 import org.thymeleaf.spring5.SpringTemplateEngine
+import java.nio.charset.StandardCharsets
+import java.util.*
+import javax.mail.MessagingException
 
 private const val USER = "user"
 private const val BASE_URL = "baseUrl"
@@ -70,7 +72,7 @@ class MailService(
             log.debug("Email doesn't exist for user '{}'", user.login)
             return
         }
-        val locale = Locale.forLanguageTag(user.langKey)
+        val locale = Locale.forLanguageTag("en")
         val context = Context(locale).apply {
             setVariable(USER, user)
             setVariable(BASE_URL, jHipsterProperties.mail.baseUrl)
@@ -96,5 +98,24 @@ class MailService(
     fun sendPasswordResetMail(user: User) {
         log.debug("Sending password reset email to '{}'", user.email)
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title")
+    }
+
+    @Async
+    fun sendOrderMail(user: User, order: Order?, delivery: Delivery?) {
+        log.debug("Sending order email to '{}'", user.email)
+        val templateName = "mail/orderEmail"
+        if (user.email == null) {
+            log.debug("Email doesn't exist for user '{}'", user.login)
+            return
+        }
+        val locale = Locale.forLanguageTag("en")
+        val context = Context(locale)
+        context.setVariable(USER, user)
+        context.setVariable("order", order)
+        context.setVariable("delivery", delivery)
+        context.setVariable(BASE_URL, jHipsterProperties.mail.baseUrl)
+        val content = templateEngine.process(templateName, context)
+        val subject = messageSource.getMessage("order.completed.title", null, locale)
+        sendEmail(user.email!!, subject, content, false, true)
     }
 }

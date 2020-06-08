@@ -1,5 +1,6 @@
 package com.team.flowershop.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.team.flowershop.domain.enumeration.CardType
 import java.io.Serializable
 import javax.persistence.*
@@ -34,6 +35,7 @@ data class ClientCard(
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
+    @JsonIgnore
     var user: User? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

@@ -1,6 +1,6 @@
 package com.team.flowershop.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.team.flowershop.domain.enumeration.DeliveryType
 import java.io.Serializable
 import javax.persistence.*
@@ -34,7 +34,7 @@ data class Delivery(
     @JoinColumn(name = "id")
     var order: Order? = null,
 
-    @ManyToOne @JsonIgnoreProperties("deliveries")
+    @ManyToOne @JsonManagedReference("user-deliveries")
     var user: User? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

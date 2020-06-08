@@ -1,8 +1,9 @@
 package com.team.flowershop.domain
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.team.flowershop.config.LOGIN_REGEX
-import org.hibernate.annotations.BatchSize
 import java.io.Serializable
 import java.time.Instant
 import java.util.*
@@ -11,6 +12,7 @@ import javax.validation.constraints.Email
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
+import org.hibernate.annotations.BatchSize
 
 /**
  * A user.
@@ -70,16 +72,16 @@ class User @JvmOverloads constructor(
     @Column(name = "reset_date")
     var resetDate: Instant? = null,
 
-    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
+    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL]) @JsonIgnoreProperties("user")
     var clientCard: ClientCard? = null,
 
-    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
+    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL]) @JsonIgnoreProperties("user")
     var cart: Cart? = null,
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user") @JsonBackReference("user-orders")
     var orders: MutableSet<Order> = mutableSetOf(),
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user") @JsonBackReference("user-deliveries")
     var deliveries: MutableSet<Delivery> = mutableSetOf(),
 
     @JsonIgnore

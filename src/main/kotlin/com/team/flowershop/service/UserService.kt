@@ -3,8 +3,13 @@ package com.team.flowershop.service
 import com.team.flowershop.config.ANONYMOUS_USER
 import com.team.flowershop.config.DEFAULT_LANGUAGE
 import com.team.flowershop.domain.Authority
+import com.team.flowershop.domain.Cart
+import com.team.flowershop.domain.ClientCard
 import com.team.flowershop.domain.User
+import com.team.flowershop.domain.enumeration.CardType
 import com.team.flowershop.repository.AuthorityRepository
+import com.team.flowershop.repository.CartRepository
+import com.team.flowershop.repository.ClientCardRepository
 import com.team.flowershop.repository.UserRepository
 import com.team.flowershop.repository.search.UserSearchRepository
 import com.team.flowershop.security.USER
@@ -31,7 +36,9 @@ class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
     private val userSearchRepository: UserSearchRepository,
-    private val authorityRepository: AuthorityRepository
+    private val authorityRepository: AuthorityRepository,
+    private val clientCardRepository: ClientCardRepository,
+    private val cartRepository: CartRepository
 ) {
 
     private val log = LoggerFactory.getLogger(javaClass)
@@ -44,6 +51,13 @@ class UserService(
                 user.activated = true
                 user.activationKey = null
                 userSearchRepository.save(user)
+
+                val cart = Cart(user = user)
+                cartRepository.save(cart)
+
+                val card = ClientCard(user = user, name = "Бонусна карта #${user.id}", description = "Картка видана за реєстрацію користувачеві ${user.email}", type = CardType.BONUS, bonusAmount = 0.0, percentage = 0.0)
+                clientCardRepository.save(card)
+
                 log.debug("Activated user: {}", user)
                 user
             }

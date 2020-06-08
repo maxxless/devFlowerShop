@@ -2,6 +2,7 @@ package com.team.flowershop.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import java.io.Serializable
 import java.time.Instant
 import javax.persistence.*
@@ -22,7 +23,7 @@ data class Order(
     @Column(name = "date")
     var date: Instant? = null,
 
-    @ManyToOne @JsonIgnoreProperties("orders")
+    @ManyToOne @JsonManagedReference("user-orders")
     var user: User? = null,
 
     @ManyToOne @JsonIgnoreProperties("orders")

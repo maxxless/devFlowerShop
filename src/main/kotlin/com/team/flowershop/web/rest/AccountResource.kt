@@ -1,5 +1,7 @@
 package com.team.flowershop.web.rest
 
+import com.team.flowershop.config.LOGIN_REGEX
+import com.team.flowershop.domain.*
 import com.team.flowershop.repository.UserRepository
 import com.team.flowershop.security.getCurrentUserLogin
 import com.team.flowershop.service.MailService
@@ -13,6 +15,10 @@ import com.team.flowershop.web.rest.vm.KeyAndPasswordVM
 import com.team.flowershop.web.rest.vm.ManagedUserVM
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
+import javax.validation.constraints.Email
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Size
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -35,6 +41,39 @@ class AccountResource(
 ) {
 
     internal class AccountResourceException(message: String) : RuntimeException(message)
+
+    class UserAccountDTO(
+        var id: Long? = null,
+
+        @field:NotBlank
+        @field:Pattern(regexp = LOGIN_REGEX)
+        @field:Size(min = 1, max = 50)
+        var login: String? = null,
+
+        @field:Size(max = 50)
+        var firstName: String? = null,
+
+        @field:Size(max = 50)
+        var lastName: String? = null,
+
+        @field:Email
+        @field:Size(min = 5, max = 254)
+        var email: String? = null,
+
+        var clientCard: ClientCard? = null,
+
+        var cart: Cart? = null,
+
+        var deliveries: Set<Delivery>? = null,
+
+        var orders: Set<Order>? = null
+    ) {
+        constructor(user: User) :
+            this(
+                user.id, user.login, user.firstName, user.lastName, user.email,
+                user.clientCard, user.cart, user.deliveries, user.orders
+            )
+    }
 
     private val log = LoggerFactory.getLogger(javaClass)
 
@@ -92,6 +131,18 @@ class AccountResource(
     fun getAccount(): UserDTO =
         userService.getUserWithAuthorities()
             .map { UserDTO(it) }
+            .orElseThrow { AccountResourceException("User could not be found") }
+
+    /**
+     * `GET  /account/details` : get the current user.
+     *
+     * @return the current user.
+     * @throws RuntimeException `500 (Internal Server Error)` if the user couldn't be returned.
+     */
+    @GetMapping("/account/details")
+    fun getAccountDetails(): UserAccountDTO =
+        userService.getUserWithAuthorities()
+            .map { UserAccountDTO(it) }
             .orElseThrow { AccountResourceException("User could not be found") }
 
     /**

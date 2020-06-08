@@ -1,13 +1,9 @@
 package com.team.flowershop.domain
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
+import java.io.Serializable
 import javax.persistence.*
 import javax.validation.constraints.*
-
-import org.springframework.data.elasticsearch.annotations.FieldType
-import java.io.Serializable
 
 /**
  * A Collection.
@@ -49,7 +45,7 @@ data class Collection(
         inverseJoinColumns = [JoinColumn(name = "flowers_id", referencedColumnName = "id")])
     var flowers: MutableSet<Flower> = mutableSetOf(),
 
-    @ManyToOne    @JsonIgnoreProperties("collections")
+    @ManyToOne @JsonIgnoreProperties("collections")
     var category: Category? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -93,7 +89,6 @@ data class Collection(
         ", image='$image'" +
         ", imageContentType='$imageContentType'" +
         "}"
-
 
     companion object {
         private const val serialVersionUID = 1L

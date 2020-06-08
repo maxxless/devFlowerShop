@@ -44,7 +44,7 @@ entity Delivery {
     postOfficeNumber Integer
     price Double
     type DeliveryType
-} 
+}
 
 enum DeliveryType {
  	POST_OFFICE, COURIER, SELF_PICK_UP
@@ -92,7 +92,7 @@ entity CollectionInCart {
 
 relationship OneToOne {
 	Cart{user} to User with jpaDerivedIdentifier
-    ClientCard{order} to User with jpaDerivedIdentifier
+    ClientCard{user} to User with jpaDerivedIdentifier
     Delivery{order} to Order{delivery} with jpaDerivedIdentifier
 }
 

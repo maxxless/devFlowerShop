@@ -6,11 +6,19 @@ import com.team.flowershop.repository.OrderRepository
 import com.team.flowershop.repository.search.OrderSearchRepository
 import com.team.flowershop.service.OrderService
 import com.team.flowershop.web.rest.errors.ExceptionTranslator
-
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
-
+import org.assertj.core.api.Assertions.assertThat
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -20,21 +28,6 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.validation.Validator
-import javax.persistence.EntityManager
-import java.time.Instant
-import java.time.temporal.ChronoUnit
-
-import org.assertj.core.api.Assertions.assertThat
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
-import org.hamcrest.Matchers.hasItem
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -42,7 +35,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.validation.Validator
 
 /**
  * Integration tests for the [OrderResource] REST controller.
@@ -123,7 +118,7 @@ class OrderResourceIT {
         assertThat(testOrder.date).isEqualTo(DEFAULT_DATE)
 
         // Validate the Order in Elasticsearch
-        verify(mockOrderSearchRepository, times(1)).save(testOrder);
+        verify(mockOrderSearchRepository, times(1)).save(testOrder)
     }
 
     @Test
@@ -149,7 +144,6 @@ class OrderResourceIT {
         verify(mockOrderSearchRepository, times(0)).save(order)
     }
 
-
     @Test
     @Transactional
     fun getAllOrders() {
@@ -164,7 +158,7 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
     }
-    
+
     @Test
     @Transactional
     fun getOrder() {
@@ -287,7 +281,7 @@ class OrderResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(order.id?.toInt())))
             .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE)))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
     }
 
     companion object {

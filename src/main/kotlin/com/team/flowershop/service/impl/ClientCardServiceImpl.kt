@@ -1,18 +1,15 @@
 package com.team.flowershop.service.impl
 
-import com.team.flowershop.service.ClientCardService
 import com.team.flowershop.domain.ClientCard
 import com.team.flowershop.repository.ClientCardRepository
 import com.team.flowershop.repository.UserRepository
 import com.team.flowershop.repository.search.ClientCardSearchRepository
+import com.team.flowershop.service.ClientCardService
+import java.util.Optional
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 import org.slf4j.LoggerFactory
-
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import java.util.Optional
-
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 
 /**
  * Service Implementation for managing [ClientCard].
@@ -35,7 +32,7 @@ class ClientCardServiceImpl(
      */
     override fun save(clientCard: ClientCard): ClientCard {
         log.debug("Request to save ClientCard : {}", clientCard)
-        val userId = clientCard.order?.id
+        val userId = clientCard.user?.id
         if (userId != null) {
             userRepository.findById(userId)
                 .ifPresent { clientCard.user = it }

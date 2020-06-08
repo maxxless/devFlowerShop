@@ -1,17 +1,14 @@
 package com.team.flowershop.service.impl
 
-import com.team.flowershop.service.CategoryService
 import com.team.flowershop.domain.Category
 import com.team.flowershop.repository.CategoryRepository
 import com.team.flowershop.repository.search.CategorySearchRepository
+import com.team.flowershop.service.CategoryService
+import java.util.Optional
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 import org.slf4j.LoggerFactory
-
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import java.util.Optional
-
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 
 /**
  * Service Implementation for managing [Category].

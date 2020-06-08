@@ -1,11 +1,7 @@
 package com.team.flowershop.domain
 
-
-
-import javax.persistence.*
-
-import org.springframework.data.elasticsearch.annotations.FieldType
 import java.io.Serializable
+import javax.persistence.*
 
 /**
  * A Cart.
@@ -53,7 +49,6 @@ data class Cart(
         ", bonusDiscount=$bonusDiscount" +
         ", finalPrice=$finalPrice" +
         "}"
-
 
     companion object {
         private const val serialVersionUID = 1L

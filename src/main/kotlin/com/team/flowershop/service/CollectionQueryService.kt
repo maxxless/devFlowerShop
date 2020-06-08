@@ -1,24 +1,21 @@
 package com.team.flowershop.service
 
+import com.team.flowershop.domain.Category_
+import com.team.flowershop.domain.Collection
+import com.team.flowershop.domain.Collection_
+import com.team.flowershop.domain.Flower_
+import com.team.flowershop.domain.Packing_
+import com.team.flowershop.repository.CollectionRepository
+import com.team.flowershop.repository.search.CollectionSearchRepository
+import com.team.flowershop.service.dto.CollectionCriteria
+import io.github.jhipster.service.QueryService
 import javax.persistence.criteria.JoinType
-
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import io.github.jhipster.service.QueryService
-
-import com.team.flowershop.domain.Collection
-import com.team.flowershop.domain.Collection_
-import com.team.flowershop.domain.Category_
-import com.team.flowershop.domain.Flower_
-import com.team.flowershop.domain.Packing_
-import com.team.flowershop.repository.CollectionRepository
-import com.team.flowershop.repository.search.CollectionSearchRepository
-import com.team.flowershop.service.dto.CollectionCriteria
 
 /**
  * Service for executing complex queries for [Collection] entities in the database.

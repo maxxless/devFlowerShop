@@ -2,21 +2,24 @@ package com.team.flowershop.web.rest
 
 import com.team.flowershop.FlowershopApp
 import com.team.flowershop.domain.Collection
-import com.team.flowershop.domain.Packing
-import com.team.flowershop.domain.Flower
-import com.team.flowershop.domain.Category
 import com.team.flowershop.repository.CollectionRepository
 import com.team.flowershop.repository.search.CollectionSearchRepository
+import com.team.flowershop.service.CollectionQueryService
 import com.team.flowershop.service.CollectionService
 import com.team.flowershop.web.rest.errors.ExceptionTranslator
-import com.team.flowershop.service.dto.CollectionCriteria
-import com.team.flowershop.service.CollectionQueryService
-
+import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
-
+import org.assertj.core.api.Assertions.assertThat
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -26,20 +29,6 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.util.Base64Utils
-import org.springframework.validation.Validator
-import javax.persistence.EntityManager
-
-import org.assertj.core.api.Assertions.assertThat
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
-import org.hamcrest.Matchers.hasItem
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -47,7 +36,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.util.Base64Utils
+import org.springframework.validation.Validator
 
 /**
  * Integration tests for the [CollectionResource] REST controller.
@@ -140,7 +132,7 @@ class CollectionResourceIT {
         assertThat(testCollection.imageContentType).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE)
 
         // Validate the Collection in Elasticsearch
-        verify(mockCollectionSearchRepository, times(1)).save(testCollection);
+        verify(mockCollectionSearchRepository, times(1)).save(testCollection)
     }
 
     @Test
@@ -165,7 +157,6 @@ class CollectionResourceIT {
         // Validate the Collection in Elasticsearch
         verify(mockCollectionSearchRepository, times(0)).save(collection)
     }
-
 
     @Test
     @Transactional
@@ -222,7 +213,7 @@ class CollectionResourceIT {
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
     }
-    
+
     @Suppress("unchecked")
     fun getAllCollectionsWithEagerRelationshipsIsEnabled() {
         val collectionResource = CollectionResource(collectionServiceMock, collectionQueryService)
@@ -243,7 +234,7 @@ class CollectionResourceIT {
     @Suppress("unchecked")
     fun getAllCollectionsWithEagerRelationshipsIsNotEnabled() {
         val collectionResource = CollectionResource(collectionServiceMock, collectionQueryService)
-            `when`(collectionServiceMock.findAllWithEagerRelationships(any())).thenReturn( PageImpl( mutableListOf()))
+            `when`(collectionServiceMock.findAllWithEagerRelationships(any())).thenReturn(PageImpl(mutableListOf()))
         val restCollectionMockMvc = MockMvcBuilders.standaloneSetup(collectionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -279,7 +270,7 @@ class CollectionResourceIT {
 
     @Test
     @Transactional
-    fun getCollectionsByIdFiltering()  {
+    fun getCollectionsByIdFiltering() {
       // Initialize the database
       collectionRepository.saveAndFlush(collection)
       val id = collection.id
@@ -350,7 +341,7 @@ class CollectionResourceIT {
                 @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllCollectionsByNameContainsSomething(){
+    fun getAllCollectionsByNameContainsSomething() {
         // Initialize the database
         collectionRepository.saveAndFlush(collection)
 
@@ -374,7 +365,6 @@ class CollectionResourceIT {
         // Get all the collectionList where name does not contain UPDATED_NAME
         defaultCollectionShouldBeFound("name.doesNotContain=" + UPDATED_NAME)
     }
-
 
     @Test
     @Transactional
@@ -432,7 +422,7 @@ class CollectionResourceIT {
                 @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllCollectionsByDescriptionContainsSomething(){
+    fun getAllCollectionsByDescriptionContainsSomething() {
         // Initialize the database
         collectionRepository.saveAndFlush(collection)
 
@@ -456,7 +446,6 @@ class CollectionResourceIT {
         // Get all the collectionList where description does not contain UPDATED_DESCRIPTION
         defaultCollectionShouldBeFound("description.doesNotContain=" + UPDATED_DESCRIPTION)
     }
-
 
     @Test
     @Transactional
@@ -568,7 +557,6 @@ class CollectionResourceIT {
         defaultCollectionShouldBeFound("price.greaterThan=$SMALLER_PRICE")
     }
 
-
     @Test
     @Transactional
     fun getAllCollectionsByAvailablePackingsIsEqualToSomething() {
@@ -635,7 +623,7 @@ class CollectionResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
 
         // Check, that the count call also returns 1
         restCollectionMockMvc.perform(get("/api/collections/count?sort=id,desc&$filter"))
@@ -774,7 +762,7 @@ class CollectionResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
     }
 
     companion object {

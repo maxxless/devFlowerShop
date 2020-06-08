@@ -1,13 +1,9 @@
 package com.team.flowershop.domain
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore
-
+import java.io.Serializable
 import javax.persistence.*
 import javax.validation.constraints.*
-
-import org.springframework.data.elasticsearch.annotations.FieldType
-import java.io.Serializable
 
 /**
  * A Flower.
@@ -90,7 +86,6 @@ data class Flower(
         ", image='$image'" +
         ", imageContentType='$imageContentType'" +
         "}"
-
 
     companion object {
         private const val serialVersionUID = 1L

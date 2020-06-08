@@ -2,16 +2,21 @@ package com.team.flowershop.web.rest
 
 import com.team.flowershop.FlowershopApp
 import com.team.flowershop.domain.Cart
-import com.team.flowershop.domain.User
 import com.team.flowershop.repository.CartRepository
 import com.team.flowershop.repository.search.CartSearchRepository
 import com.team.flowershop.service.CartService
 import com.team.flowershop.web.rest.errors.ExceptionTranslator
-
+import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
-
+import org.assertj.core.api.Assertions.assertThat
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -19,19 +24,6 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.validation.Validator
-import javax.persistence.EntityManager
-
-import org.assertj.core.api.Assertions.assertThat
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
-import org.hamcrest.Matchers.hasItem
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -39,7 +31,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.validation.Validator
 
 /**
  * Integration tests for the [CartResource] REST controller.
@@ -125,7 +119,7 @@ class CartResourceIT {
         assertThat(testCart.id).isEqualTo(testCart.user?.id)
 
         // Validate the Cart in Elasticsearch
-        verify(mockCartSearchRepository, times(1)).save(testCart);
+        verify(mockCartSearchRepository, times(1)).save(testCart)
     }
 
     @Test
@@ -208,7 +202,7 @@ class CartResourceIT {
             .andExpect(jsonPath("$.[*].bonusDiscount").value(hasItem(DEFAULT_BONUS_DISCOUNT)))
             .andExpect(jsonPath("$.[*].finalPrice").value(hasItem(DEFAULT_FINAL_PRICE)))
     }
-    
+
     @Test
     @Transactional
     fun getCart() {
@@ -339,7 +333,7 @@ class CartResourceIT {
             .andExpect(jsonPath("$.[*].totalPriceWithoutDiscount").value(hasItem(DEFAULT_TOTAL_PRICE_WITHOUT_DISCOUNT)))
             .andExpect(jsonPath("$.[*].cardDiscount").value(hasItem(DEFAULT_CARD_DISCOUNT)))
             .andExpect(jsonPath("$.[*].bonusDiscount").value(hasItem(DEFAULT_BONUS_DISCOUNT)))
-            .andExpect(jsonPath("$.[*].finalPrice").value(hasItem(DEFAULT_FINAL_PRICE)));
+            .andExpect(jsonPath("$.[*].finalPrice").value(hasItem(DEFAULT_FINAL_PRICE)))
     }
 
     companion object {

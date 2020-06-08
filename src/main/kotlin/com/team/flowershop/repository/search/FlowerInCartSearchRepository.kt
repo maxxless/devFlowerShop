@@ -1,6 +1,5 @@
 package com.team.flowershop.repository.search
 
-
 import com.team.flowershop.domain.FlowerInCart
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 

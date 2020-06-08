@@ -1,10 +1,8 @@
 package com.team.flowershop.service
 import com.team.flowershop.domain.Delivery
-
+import java.util.Optional
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-
-import java.util.Optional
 
 /**
  * Service Interface for managing [Delivery].

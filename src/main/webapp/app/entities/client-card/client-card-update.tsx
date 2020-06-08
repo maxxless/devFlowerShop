@@ -17,7 +17,7 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IClientCardUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ClientCardUpdate = (props: IClientCardUpdateProps) => {
-  const [orderId, setOrderId] = useState('0');
+  const [userId, setUserId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { clientCardEntity, users, loading, updating } = props;
@@ -125,12 +125,12 @@ export const ClientCardUpdate = (props: IClientCardUpdateProps) => {
                 <AvField id="client-card-percentage" type="string" className="form-control" name="percentage" />
               </AvGroup>
               <AvGroup>
-                <Label for="client-card-order">Order</Label>
-                <AvInput id="client-card-order" type="select" className="form-control" name="order.id">
+                <Label for="client-card-user">User</Label>
+                <AvInput id="client-card-user" type="select" className="form-control" name="user">
                   <option value="" key="0" />
                   {users
-                    ? users.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
+                    ? users.map((otherEntity, index) => (
+                        <option value={index} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
                       ))

@@ -6,11 +6,17 @@ import com.team.flowershop.repository.CategoryRepository
 import com.team.flowershop.repository.search.CategorySearchRepository
 import com.team.flowershop.service.CategoryService
 import com.team.flowershop.web.rest.errors.ExceptionTranslator
-
+import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
-
+import org.assertj.core.api.Assertions.assertThat
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,19 +24,6 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.validation.Validator
-import javax.persistence.EntityManager
-
-import org.assertj.core.api.Assertions.assertThat
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
-import org.hamcrest.Matchers.hasItem
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -38,7 +31,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.validation.Validator
 
 /**
  * Integration tests for the [CategoryResource] REST controller.
@@ -118,7 +113,7 @@ class CategoryResourceIT {
         assertThat(testCategory.name).isEqualTo(DEFAULT_NAME)
 
         // Validate the Category in Elasticsearch
-        verify(mockCategorySearchRepository, times(1)).save(testCategory);
+        verify(mockCategorySearchRepository, times(1)).save(testCategory)
     }
 
     @Test
@@ -143,7 +138,6 @@ class CategoryResourceIT {
         // Validate the Category in Elasticsearch
         verify(mockCategorySearchRepository, times(0)).save(category)
     }
-
 
     @Test
     @Transactional
@@ -177,7 +171,7 @@ class CategoryResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(category.id?.toInt())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
     }
-    
+
     @Test
     @Transactional
     fun getCategory() {
@@ -296,7 +290,7 @@ class CategoryResourceIT {
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(category.id?.toInt())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
     }
 
     companion object {

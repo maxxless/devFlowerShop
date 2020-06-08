@@ -1,19 +1,16 @@
 package com.team.flowershop.service.impl
 
-import com.team.flowershop.service.FlowerService
 import com.team.flowershop.domain.Flower
 import com.team.flowershop.repository.FlowerRepository
 import com.team.flowershop.repository.search.FlowerSearchRepository
+import com.team.flowershop.service.FlowerService
+import java.util.Optional
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 import org.slf4j.LoggerFactory
-
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import java.util.Optional
-
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 
 /**
  * Service Implementation for managing [Flower].
@@ -59,7 +56,6 @@ class FlowerServiceImpl(
      */
     override fun findAllWithEagerRelationships(pageable: Pageable) =
         flowerRepository.findAllWithEagerRelationships(pageable)
-
 
     /**
      * Get one flower by id.

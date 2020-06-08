@@ -71,7 +71,7 @@ export const ClientCard = (props: IClientCardProps) => {
                 <th>Type</th>
                 <th>Bonus Amount</th>
                 <th>Percentage</th>
-                <th>Order</th>
+                <th>User</th>
                 <th />
               </tr>
             </thead>
@@ -88,7 +88,7 @@ export const ClientCard = (props: IClientCardProps) => {
                   <td>{clientCard.type}</td>
                   <td>{clientCard.bonusAmount}</td>
                   <td>{clientCard.percentage}</td>
-                  <td>{clientCard.order ? clientCard.order.id : ''}</td>
+                  <td>{clientCard.user ? clientCard.user.id : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${clientCard.id}`} color="info" size="sm">

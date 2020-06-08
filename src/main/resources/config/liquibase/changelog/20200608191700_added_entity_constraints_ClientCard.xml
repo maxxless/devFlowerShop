@@ -10,7 +10,7 @@
         
         <addForeignKeyConstraint baseColumnNames="id"
                                  baseTableName="client_card"
-                                 constraintName="fk_client_card_order_id"
+                                 constraintName="fk_client_card_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 

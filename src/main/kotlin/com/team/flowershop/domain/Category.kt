@@ -1,12 +1,8 @@
 package com.team.flowershop.domain
 
-
-
+import java.io.Serializable
 import javax.persistence.*
 import javax.validation.constraints.*
-
-import org.springframework.data.elasticsearch.annotations.FieldType
-import java.io.Serializable
 
 /**
  * A Category.
@@ -54,7 +50,6 @@ data class Category(
         "id=$id" +
         ", name='$name'" +
         "}"
-
 
     companion object {
         private const val serialVersionUID = 1L

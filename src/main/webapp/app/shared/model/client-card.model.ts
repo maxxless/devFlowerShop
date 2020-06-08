@@ -8,7 +8,7 @@ export interface IClientCard {
   type?: CardType;
   bonusAmount?: number;
   percentage?: number;
-  order?: IUser;
+  user?: IUser;
 }
 
 export const defaultValue: Readonly<IClientCard> = {};

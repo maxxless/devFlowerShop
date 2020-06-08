@@ -1,20 +1,19 @@
 package com.team.flowershop.web.rest
 
 import com.team.flowershop.domain.Packing
-import com.team.flowershop.service.PackingService
-import com.team.flowershop.web.rest.errors.BadRequestAlertException
-import com.team.flowershop.service.dto.PackingCriteria
 import com.team.flowershop.service.PackingQueryService
-
+import com.team.flowershop.service.PackingService
+import com.team.flowershop.service.dto.PackingCriteria
+import com.team.flowershop.web.rest.errors.BadRequestAlertException
 import io.github.jhipster.web.util.HeaderUtil
 import io.github.jhipster.web.util.PaginationUtil
 import io.github.jhipster.web.util.ResponseUtil
+import java.net.URI
+import java.net.URISyntaxException
+import javax.validation.Valid
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.http.HttpStatus
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,11 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-
-import javax.validation.Valid
-import java.net.URI
-import java.net.URISyntaxException
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 private const val ENTITY_NAME = "packing"
 /**
@@ -101,10 +96,10 @@ class PackingResource(
      * @param criteria the criteria which the requested entities should match.
      * @return the [ResponseEntity] with status `200 (OK)` and the list of packings in body.
      */
-    @GetMapping("/packings")        fun getAllPackings(
+    @GetMapping("/packings") fun getAllPackings(
         criteria: PackingCriteria,
         pageable: Pageable
-        
+
     ): ResponseEntity<MutableList<Packing>> {
         log.debug("REST request to get Packings by criteria: {}", criteria)
         val page = packingQueryService.findByCriteria(criteria, pageable)

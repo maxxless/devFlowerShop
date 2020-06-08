@@ -1,14 +1,9 @@
 package com.team.flowershop.domain
 
-
-
+import com.team.flowershop.domain.enumeration.CardType
+import java.io.Serializable
 import javax.persistence.*
 import javax.validation.constraints.*
-
-import org.springframework.data.elasticsearch.annotations.FieldType
-import java.io.Serializable
-
-import com.team.flowershop.domain.enumeration.CardType
 
 /**
  * A ClientCard.
@@ -39,7 +34,7 @@ data class ClientCard(
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
-    var order: User? = null
+    var user: User? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 ) : Serializable {
@@ -62,7 +57,6 @@ data class ClientCard(
         ", bonusAmount=$bonusAmount" +
         ", percentage=$percentage" +
         "}"
-
 
     companion object {
         private const val serialVersionUID = 1L

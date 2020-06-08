@@ -1,12 +1,8 @@
 package com.team.flowershop.domain
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
-import javax.persistence.*
-
-import org.springframework.data.elasticsearch.annotations.FieldType
 import java.io.Serializable
+import javax.persistence.*
 
 /**
  * A FlowerInOrder.
@@ -21,13 +17,13 @@ data class FlowerInOrder(
     @Column(name = "amount")
     var amount: Int? = null,
 
-    @ManyToOne    @JsonIgnoreProperties("flowerInOrders")
+    @ManyToOne @JsonIgnoreProperties("flowerInOrders")
     var order: Order? = null,
 
-    @ManyToOne    @JsonIgnoreProperties("flowerInOrders")
+    @ManyToOne @JsonIgnoreProperties("flowerInOrders")
     var colour: Colour? = null,
 
-    @ManyToOne    @JsonIgnoreProperties("flowerInOrders")
+    @ManyToOne @JsonIgnoreProperties("flowerInOrders")
     var flower: Flower? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -47,7 +43,6 @@ data class FlowerInOrder(
         "id=$id" +
         ", amount=$amount" +
         "}"
-
 
     companion object {
         private const val serialVersionUID = 1L

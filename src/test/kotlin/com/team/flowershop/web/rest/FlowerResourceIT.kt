@@ -2,20 +2,24 @@ package com.team.flowershop.web.rest
 
 import com.team.flowershop.FlowershopApp
 import com.team.flowershop.domain.Flower
-import com.team.flowershop.domain.Colour
-import com.team.flowershop.domain.Collection
 import com.team.flowershop.repository.FlowerRepository
 import com.team.flowershop.repository.search.FlowerSearchRepository
+import com.team.flowershop.service.FlowerQueryService
 import com.team.flowershop.service.FlowerService
 import com.team.flowershop.web.rest.errors.ExceptionTranslator
-import com.team.flowershop.service.dto.FlowerCriteria
-import com.team.flowershop.service.FlowerQueryService
-
+import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
-
+import org.assertj.core.api.Assertions.assertThat
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -25,20 +29,6 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.util.Base64Utils
-import org.springframework.validation.Validator
-import javax.persistence.EntityManager
-
-import org.assertj.core.api.Assertions.assertThat
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
-import org.hamcrest.Matchers.hasItem
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -46,7 +36,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.util.Base64Utils
+import org.springframework.validation.Validator
 
 /**
  * Integration tests for the [FlowerResource] REST controller.
@@ -139,7 +132,7 @@ class FlowerResourceIT {
         assertThat(testFlower.imageContentType).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE)
 
         // Validate the Flower in Elasticsearch
-        verify(mockFlowerSearchRepository, times(1)).save(testFlower);
+        verify(mockFlowerSearchRepository, times(1)).save(testFlower)
     }
 
     @Test
@@ -164,7 +157,6 @@ class FlowerResourceIT {
         // Validate the Flower in Elasticsearch
         verify(mockFlowerSearchRepository, times(0)).save(flower)
     }
-
 
     @Test
     @Transactional
@@ -221,7 +213,7 @@ class FlowerResourceIT {
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
     }
-    
+
     @Suppress("unchecked")
     fun getAllFlowersWithEagerRelationshipsIsEnabled() {
         val flowerResource = FlowerResource(flowerServiceMock, flowerQueryService)
@@ -242,7 +234,7 @@ class FlowerResourceIT {
     @Suppress("unchecked")
     fun getAllFlowersWithEagerRelationshipsIsNotEnabled() {
         val flowerResource = FlowerResource(flowerServiceMock, flowerQueryService)
-            `when`(flowerServiceMock.findAllWithEagerRelationships(any())).thenReturn( PageImpl( mutableListOf()))
+            `when`(flowerServiceMock.findAllWithEagerRelationships(any())).thenReturn(PageImpl(mutableListOf()))
         val restFlowerMockMvc = MockMvcBuilders.standaloneSetup(flowerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -278,7 +270,7 @@ class FlowerResourceIT {
 
     @Test
     @Transactional
-    fun getFlowersByIdFiltering()  {
+    fun getFlowersByIdFiltering() {
       // Initialize the database
       flowerRepository.saveAndFlush(flower)
       val id = flower.id
@@ -349,7 +341,7 @@ class FlowerResourceIT {
                 @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllFlowersByNameContainsSomething(){
+    fun getAllFlowersByNameContainsSomething() {
         // Initialize the database
         flowerRepository.saveAndFlush(flower)
 
@@ -373,7 +365,6 @@ class FlowerResourceIT {
         // Get all the flowerList where name does not contain UPDATED_NAME
         defaultFlowerShouldBeFound("name.doesNotContain=" + UPDATED_NAME)
     }
-
 
     @Test
     @Transactional
@@ -431,7 +422,7 @@ class FlowerResourceIT {
                 @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllFlowersByDescriptionContainsSomething(){
+    fun getAllFlowersByDescriptionContainsSomething() {
         // Initialize the database
         flowerRepository.saveAndFlush(flower)
 
@@ -455,7 +446,6 @@ class FlowerResourceIT {
         // Get all the flowerList where description does not contain UPDATED_DESCRIPTION
         defaultFlowerShouldBeFound("description.doesNotContain=" + UPDATED_DESCRIPTION)
     }
-
 
     @Test
     @Transactional
@@ -567,7 +557,6 @@ class FlowerResourceIT {
         defaultFlowerShouldBeFound("price.greaterThan=$SMALLER_PRICE")
     }
 
-
     @Test
     @Transactional
     fun getAllFlowersByAvailableColoursIsEqualToSomething() {
@@ -616,7 +605,7 @@ class FlowerResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
 
         // Check, that the count call also returns 1
         restFlowerMockMvc.perform(get("/api/flowers/count?sort=id,desc&$filter"))
@@ -755,7 +744,7 @@ class FlowerResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
     }
 
     companion object {

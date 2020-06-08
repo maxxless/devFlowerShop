@@ -2,7 +2,6 @@ package com.team.flowershop.repository
 
 import com.team.flowershop.domain.Colour
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 /**
@@ -10,5 +9,4 @@ import org.springframework.stereotype.Repository
  */
 @Suppress("unused")
 @Repository
-interface ColourRepository : JpaRepository<Colour, Long> {
-}
+interface ColourRepository : JpaRepository<Colour, Long>

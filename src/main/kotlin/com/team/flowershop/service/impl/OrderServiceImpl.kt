@@ -1,19 +1,16 @@
 package com.team.flowershop.service.impl
 
-import com.team.flowershop.service.OrderService
 import com.team.flowershop.domain.Order
 import com.team.flowershop.repository.OrderRepository
 import com.team.flowershop.repository.search.OrderSearchRepository
+import com.team.flowershop.service.OrderService
+import java.util.Optional
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 import org.slf4j.LoggerFactory
-
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import java.util.Optional
-
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
 
 /**
  * Service Implementation for managing [Order].
@@ -52,13 +49,12 @@ class OrderServiceImpl(
         return orderRepository.findAll(pageable)
     }
 
-
     /**
      *  Get all the orders where Delivery is `null`.
      *  @return the list of entities.
      */
-    @Transactional(readOnly = true) 
-    override fun findAllWhereDeliveryIsNull(): MutableList<Order>  {
+    @Transactional(readOnly = true)
+    override fun findAllWhereDeliveryIsNull(): MutableList<Order> {
         log.debug("Request to get all orders where Delivery is null")
         return orderRepository.findAll()
             .filterTo(mutableListOf()) { it.delivery == null }

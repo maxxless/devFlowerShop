@@ -31,7 +31,7 @@
             "relationshipType": "one-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "clientCard",
-            "relationshipName": "order",
+            "relationshipName": "user",
             "otherEntityField": "id",
             "ownerSide": true,
             "useJPADerivedIdentifier": true

@@ -2,18 +2,22 @@ package com.team.flowershop.web.rest
 
 import com.team.flowershop.FlowershopApp
 import com.team.flowershop.domain.Packing
-import com.team.flowershop.domain.Collection
 import com.team.flowershop.repository.PackingRepository
 import com.team.flowershop.repository.search.PackingSearchRepository
+import com.team.flowershop.service.PackingQueryService
 import com.team.flowershop.service.PackingService
 import com.team.flowershop.web.rest.errors.ExceptionTranslator
-import com.team.flowershop.service.dto.PackingCriteria
-import com.team.flowershop.service.PackingQueryService
-
+import javax.persistence.EntityManager
 import kotlin.test.assertNotNull
-
+import org.assertj.core.api.Assertions.assertThat
+import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
+import org.hamcrest.Matchers.hasItem
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,19 +27,6 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.validation.Validator
-import javax.persistence.EntityManager
-
-import org.assertj.core.api.Assertions.assertThat
-import org.elasticsearch.index.query.QueryBuilders.queryStringQuery
-import org.hamcrest.Matchers.hasItem
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.reset
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -43,7 +34,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.validation.Validator
 
 /**
  * Integration tests for the [PackingResource] REST controller.
@@ -128,7 +121,7 @@ class PackingResourceIT {
         assertThat(testPacking.price).isEqualTo(DEFAULT_PRICE)
 
         // Validate the Packing in Elasticsearch
-        verify(mockPackingSearchRepository, times(1)).save(testPacking);
+        verify(mockPackingSearchRepository, times(1)).save(testPacking)
     }
 
     @Test
@@ -153,7 +146,6 @@ class PackingResourceIT {
         // Validate the Packing in Elasticsearch
         verify(mockPackingSearchRepository, times(0)).save(packing)
     }
-
 
     @Test
     @Transactional
@@ -208,7 +200,7 @@ class PackingResourceIT {
             .andExpect(jsonPath("$.[*].material").value(hasItem(DEFAULT_MATERIAL)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
     }
-    
+
     @Test
     @Transactional
     fun getPacking() {
@@ -230,7 +222,7 @@ class PackingResourceIT {
 
     @Test
     @Transactional
-    fun getPackingsByIdFiltering()  {
+    fun getPackingsByIdFiltering() {
       // Initialize the database
       packingRepository.saveAndFlush(packing)
       val id = packing.id
@@ -301,7 +293,7 @@ class PackingResourceIT {
                 @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllPackingsByNameContainsSomething(){
+    fun getAllPackingsByNameContainsSomething() {
         // Initialize the database
         packingRepository.saveAndFlush(packing)
 
@@ -325,7 +317,6 @@ class PackingResourceIT {
         // Get all the packingList where name does not contain UPDATED_NAME
         defaultPackingShouldBeFound("name.doesNotContain=" + UPDATED_NAME)
     }
-
 
     @Test
     @Transactional
@@ -383,7 +374,7 @@ class PackingResourceIT {
                 @Test
     @Transactional
     @Throws(Exception::class)
-    fun getAllPackingsByMaterialContainsSomething(){
+    fun getAllPackingsByMaterialContainsSomething() {
         // Initialize the database
         packingRepository.saveAndFlush(packing)
 
@@ -407,7 +398,6 @@ class PackingResourceIT {
         // Get all the packingList where material does not contain UPDATED_MATERIAL
         defaultPackingShouldBeFound("material.doesNotContain=" + UPDATED_MATERIAL)
     }
-
 
     @Test
     @Transactional
@@ -519,7 +509,6 @@ class PackingResourceIT {
         defaultPackingShouldBeFound("price.greaterThan=$SMALLER_PRICE")
     }
 
-
     @Test
     @Transactional
     fun getAllPackingsByCollectionsIsEqualToSomething() {
@@ -548,7 +537,7 @@ class PackingResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(packing.id?.toInt())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].material").value(hasItem(DEFAULT_MATERIAL)))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)));
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
 
         // Check, that the count call also returns 1
         restPackingMockMvc.perform(get("/api/packings/count?sort=id,desc&$filter"))
@@ -681,7 +670,7 @@ class PackingResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(packing.id?.toInt())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].material").value(hasItem(DEFAULT_MATERIAL)))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)));
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
     }
 
     companion object {

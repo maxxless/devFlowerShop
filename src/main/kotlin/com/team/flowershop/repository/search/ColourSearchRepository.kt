@@ -1,6 +1,5 @@
 package com.team.flowershop.repository.search
 
-
 import com.team.flowershop.domain.Colour
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 

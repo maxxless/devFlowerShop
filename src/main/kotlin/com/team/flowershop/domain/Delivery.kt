@@ -1,15 +1,10 @@
 package com.team.flowershop.domain
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-
+import com.team.flowershop.domain.enumeration.DeliveryType
+import java.io.Serializable
 import javax.persistence.*
 import javax.validation.constraints.*
-
-import org.springframework.data.elasticsearch.annotations.FieldType
-import java.io.Serializable
-
-import com.team.flowershop.domain.enumeration.DeliveryType
 
 /**
  * A Delivery.
@@ -39,7 +34,7 @@ data class Delivery(
     @JoinColumn(name = "id")
     var order: Order? = null,
 
-    @ManyToOne    @JsonIgnoreProperties("deliveries")
+    @ManyToOne @JsonIgnoreProperties("deliveries")
     var user: User? = null
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -62,7 +57,6 @@ data class Delivery(
         ", price=$price" +
         ", type='$type'" +
         "}"
-
 
     companion object {
         private const val serialVersionUID = 1L

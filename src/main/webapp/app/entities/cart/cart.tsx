@@ -10,14 +10,18 @@ import { IRootState } from 'app/shared/reducers';
 import { getSearchEntities, getEntities } from './cart.reducer';
 import { ICart } from 'app/shared/model/cart.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { getAccountDetails, getAccountOrders, getAccountDeliveries } from 'app/shared/util/api';
 
-export interface ICartProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface ICartProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
 export const Cart = (props: ICartProps) => {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
     props.getEntities();
+    getAccountDetails();
+    getAccountOrders();
+    getAccountDeliveries();
   }, []);
 
   const startSearching = () => {
@@ -71,6 +75,7 @@ export const Cart = (props: ICartProps) => {
                 <th>Bonus Discount</th>
                 <th>Final Price</th>
                 <th>User</th>
+                <th>Count</th>
                 <th />
               </tr>
             </thead>
@@ -86,6 +91,7 @@ export const Cart = (props: ICartProps) => {
                   <td>{cart.cardDiscount}</td>
                   <td>{cart.bonusDiscount}</td>
                   <td>{cart.finalPrice}</td>
+                  <td>{cart.count}</td>
                   <td>{cart.user ? cart.user.id : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -105,8 +111,8 @@ export const Cart = (props: ICartProps) => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Carts found</div>
-        )}
+            !loading && <div className="alert alert-warning">Your cart is empty</div>
+          )}
       </div>
     </div>
   );

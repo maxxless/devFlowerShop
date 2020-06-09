@@ -8,6 +8,7 @@ export interface ICart {
   cardDiscount?: number;
   bonusDiscount?: number;
   finalPrice?: number;
+  count?: number;
   user?: IUser;
   collectionDetails?: ICollectionInCart[];
   flowerDetails?: IFlowerInCart[];

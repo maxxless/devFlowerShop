@@ -69,7 +69,7 @@ export const FlowerDetail = (props: IFlowerDetailProps) => {
         </Button>
         &nbsp;
         <Button tag={Link} to={`/flower/${flowerEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Add to Cart</span>
         </Button>
       </Col>
     </Row>

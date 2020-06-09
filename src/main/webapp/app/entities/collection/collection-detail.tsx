@@ -82,7 +82,7 @@ export const CollectionDetail = (props: ICollectionDetailProps) => {
         </Button>
         &nbsp;
         <Button tag={Link} to={`/collection/${collectionEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Add to cart</span>
         </Button>
       </Col>
     </Row>

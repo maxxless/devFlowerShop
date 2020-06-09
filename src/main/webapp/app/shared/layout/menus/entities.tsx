@@ -14,38 +14,29 @@ export const EntitiesMenu = props => (
     <MenuItem icon="asterisk" to="/category">
       Category
     </MenuItem>
-    <MenuItem icon="asterisk" to="/cart">
-      Cart
-    </MenuItem>
     <MenuItem icon="asterisk" to="/colour">
       Colour
     </MenuItem>
     <MenuItem icon="asterisk" to="/flower">
       Flower
     </MenuItem>
-    <MenuItem icon="asterisk" to="/order">
-      Order
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/delivery">
-      Delivery
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/client-card">
-      Client Card
-    </MenuItem>
     <MenuItem icon="asterisk" to="/packing">
       Packing
     </MenuItem>
-    <MenuItem icon="asterisk" to="/flower-in-order">
-      Flower In Order
+    {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
+  </NavDropdown>
+);
+
+export const CatalogMenu = props => (
+  <NavDropdown icon="th-list" name="Catalog" id="entity-menu" style={{ maxHeight: '80vh', overflow: 'auto' }}>
+    <MenuItem icon="asterisk" to="/collection">
+      Collection
     </MenuItem>
-    <MenuItem icon="asterisk" to="/collection-in-order">
-      Collection In Order
+    <MenuItem icon="asterisk" to="/flower">
+      Flower
     </MenuItem>
-    <MenuItem icon="asterisk" to="/flower-in-cart">
-      Flower In Cart
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/collection-in-cart">
-      Collection In Cart
+    <MenuItem icon="asterisk" to="/packing">
+      Packing
     </MenuItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>

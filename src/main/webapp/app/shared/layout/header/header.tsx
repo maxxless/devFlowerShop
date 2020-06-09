@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink as Link } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { Home, Brand } from './header-components';
-import { AdminMenu, EntitiesMenu, AccountMenu } from '../menus';
+import { Home, Brand, Cart } from './header-components';
+import { AdminMenu, EntitiesMenu, AccountMenu, CatalogMenu } from '../menus';
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -43,11 +43,13 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
             <Home />
-            {props.isAuthenticated && <EntitiesMenu />}
+            {props.isAuthenticated && props.isAdmin || <Cart />}
+            {props.isAuthenticated && props.isAdmin ? <EntitiesMenu /> : <CatalogMenu />}
             {props.isAuthenticated && props.isAdmin && (
               <AdminMenu showSwagger={props.isSwaggerEnabled} showDatabase={!props.isInProduction} />
             )}
             <AccountMenu isAuthenticated={props.isAuthenticated} />
+
           </Nav>
         </Collapse>
       </Navbar>

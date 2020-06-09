@@ -52,7 +52,8 @@ class UserService(
                 user.activationKey = null
                 userSearchRepository.save(user)
 
-                val cart = Cart(user = user)
+                val cart = Cart(totalPriceWithoutDiscount = 0.0, cardDiscount = 0.0,
+                    bonusDiscount = 0.0, finalPrice = 0.0, user = user)
                 cartRepository.save(cart)
 
                 val card = ClientCard(user = user, name = "Бонусна карта #${user.id}", description = "Картка видана за реєстрацію користувачеві ${user.email}", type = CardType.BONUS, bonusAmount = 0.0, percentage = 0.0)

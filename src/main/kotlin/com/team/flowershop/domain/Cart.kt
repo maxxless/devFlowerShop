@@ -31,10 +31,10 @@ data class Cart(
     @JsonIgnore
     var user: User? = null,
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     var collectionDetails: MutableSet<CollectionInCart> = mutableSetOf(),
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
     var flowerDetails: MutableSet<FlowerInCart> = mutableSetOf()
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

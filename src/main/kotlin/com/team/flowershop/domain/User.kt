@@ -78,10 +78,10 @@ class User @JvmOverloads constructor(
     @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL]) @JsonIgnoreProperties("user")
     var cart: Cart? = null,
 
-    @OneToMany(mappedBy = "user") @JsonBackReference("user-orders")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) @JsonBackReference("user-orders")
     var orders: MutableSet<Order> = mutableSetOf(),
 
-    @OneToMany(mappedBy = "user") @JsonBackReference("user-deliveries")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) @JsonBackReference("user-deliveries")
     var deliveries: MutableSet<Delivery> = mutableSetOf(),
 
     @JsonIgnore

@@ -13,7 +13,7 @@ import { getEntity, updateEntity, createEntity, reset } from './cart.reducer';
 import { ICart } from 'app/shared/model/cart.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
-import { makeOrder, getPackings, getPackings } from 'app/shared/util/api';
+import { makeOrder, getPackings } from 'app/shared/util/api';
 
 export interface ICartUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> { }
 

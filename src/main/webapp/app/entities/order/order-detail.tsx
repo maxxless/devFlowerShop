@@ -45,7 +45,7 @@ export const OrderDetail = (props: IOrderDetailProps) => {
         </Button>
         &nbsp;
         <Button tag={Link} to={`/order/${orderEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Add to Cart</span>
         </Button>
       </Col>
     </Row>

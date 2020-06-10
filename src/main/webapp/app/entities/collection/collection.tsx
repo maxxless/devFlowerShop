@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getSearchEntities, getEntities, reset } from './collection.reducer';
 import { ICollection } from 'app/shared/model/collection.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export interface ICollectionProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -104,7 +105,7 @@ export const Collection = (props: ICollectionProps) => {
     setSorting(true);
   };
 
-  const { collectionList, match, loading } = props;
+  const { collectionList, match, loading, isAdmin } = props;
   return (
     <div>
       <h2 id="collection-heading">
@@ -195,12 +196,12 @@ export const Collection = (props: ICollectionProps) => {
                         <Button tag={Link} to={`${match.url}/${collection.id}`} color="info" size="sm">
                           <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                         </Button>
-                        <Button tag={Link} to={`${match.url}/${collection.id}/edit`} color="primary" size="sm">
+                        {isAdmin && <Button tag={Link} to={`${match.url}/${collection.id}/edit`} color="primary" size="sm">
                           <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                        </Button>
-                        <Button tag={Link} to={`${match.url}/${collection.id}/delete`} color="danger" size="sm">
+                        </Button>}
+                        {isAdmin && <Button tag={Link} to={`${match.url}/${collection.id}/delete`} color="danger" size="sm">
                           <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                        </Button>
+                        </Button>}
                       </div>
                     </td>
                   </tr>
@@ -216,13 +217,14 @@ export const Collection = (props: ICollectionProps) => {
   );
 };
 
-const mapStateToProps = ({ collection }: IRootState) => ({
+const mapStateToProps = ({ authentication, collection }: IRootState) => ({
   collectionList: collection.entities,
   loading: collection.loading,
   totalItems: collection.totalItems,
   links: collection.links,
   entity: collection.entity,
-  updateSuccess: collection.updateSuccess
+  updateSuccess: collection.updateSuccess,
+  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
 });
 
 const mapDispatchToProps = {

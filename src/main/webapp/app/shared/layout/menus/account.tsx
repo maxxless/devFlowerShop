@@ -31,9 +31,12 @@ const accountMenuItems = (
   </>
 );
 
-export const AccountMenu = ({ isAuthenticated = false }) => (
+export const AccountMenu = ({ isAuthenticated = false, isAdmin }) => (
   <NavDropdown icon="user" name="Account" id="account-menu">
     {isAuthenticated ? accountMenuItemsAuthenticated : accountMenuItems}
+    {isAuthenticated && isAdmin || <MenuItem icon="asterisk" to="/order">
+      Orders and Deliveries
+    </MenuItem>}
   </NavDropdown>
 );
 

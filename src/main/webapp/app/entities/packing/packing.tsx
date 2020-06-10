@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getSearchEntities, getEntities, reset } from './packing.reducer';
 import { IPacking } from 'app/shared/model/packing.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export interface IPackingProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -104,7 +105,7 @@ export const Packing = (props: IPackingProps) => {
     setSorting(true);
   };
 
-  const { packingList, match, loading } = props;
+  const { packingList, match, loading, isAdmin } = props;
   return (
     <div>
       <h2 id="packing-heading">
@@ -175,12 +176,12 @@ export const Packing = (props: IPackingProps) => {
                         <Button tag={Link} to={`${match.url}/${packing.id}`} color="info" size="sm">
                           <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                         </Button>
-                        <Button tag={Link} to={`${match.url}/${packing.id}/edit`} color="primary" size="sm">
+                        {isAdmin && <Button tag={Link} to={`${match.url}/${packing.id}/edit`} color="primary" size="sm">
                           <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                        </Button>
-                        <Button tag={Link} to={`${match.url}/${packing.id}/delete`} color="danger" size="sm">
+                        </Button>}
+                        {isAdmin && <Button tag={Link} to={`${match.url}/${packing.id}/delete`} color="danger" size="sm">
                           <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                        </Button>
+                        </Button>}
                       </div>
                     </td>
                   </tr>
@@ -196,13 +197,14 @@ export const Packing = (props: IPackingProps) => {
   );
 };
 
-const mapStateToProps = ({ packing }: IRootState) => ({
+const mapStateToProps = ({ authentication, packing }: IRootState) => ({
   packingList: packing.entities,
   loading: packing.loading,
   totalItems: packing.totalItems,
   links: packing.links,
   entity: packing.entity,
-  updateSuccess: packing.updateSuccess
+  updateSuccess: packing.updateSuccess,
+  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
 });
 
 const mapDispatchToProps = {

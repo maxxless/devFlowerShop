@@ -45,7 +45,6 @@ export const AdminMenu = ({ showSwagger, showDatabase }) => (
   <NavDropdown icon="user-plus" name="Administration" style={{ width: '140%' }} id="admin-menu">
     {adminMenuItems}
     {showSwagger && swaggerItem}
-
     {showDatabase && databaseItem}
   </NavDropdown>
 );

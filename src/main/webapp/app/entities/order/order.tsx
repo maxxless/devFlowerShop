@@ -17,8 +17,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getSearchEntities, getEntities } from './order.reducer';
 import { IOrder } from 'app/shared/model/order.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export interface IOrderProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -90,7 +91,7 @@ export const Order = (props: IOrderProps) => {
       activePage: currentPage
     });
 
-  const { orderList, match, loading, totalItems } = props;
+  const { orderList, match, loading, totalItems, isAdmin } = props;
   return (
     <div>
       <h2 id="order-heading">
@@ -159,22 +160,22 @@ export const Order = (props: IOrderProps) => {
                       <Button tag={Link} to={`${match.url}/${order.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button
+                      {isAdmin && <Button
                         tag={Link}
                         to={`${match.url}/${order.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="primary"
                         size="sm"
                       >
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button>
-                      <Button
+                      </Button>}
+                      {isAdmin && <Button
                         tag={Link}
                         to={`${match.url}/${order.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                       >
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                      </Button>
+                      </Button>}
                     </div>
                   </td>
                 </tr>
@@ -203,10 +204,11 @@ export const Order = (props: IOrderProps) => {
   );
 };
 
-const mapStateToProps = ({ order }: IRootState) => ({
+const mapStateToProps = ({ authentication, order }: IRootState) => ({
   orderList: order.entities,
   loading: order.loading,
-  totalItems: order.totalItems
+  totalItems: order.totalItems,
+  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
 });
 
 const mapDispatchToProps = {

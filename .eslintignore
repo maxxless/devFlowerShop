@@ -7,3 +7,5 @@ target/
 build/
 node/
 postcss.config.js
+src/main/webapp/app/entities/cart/cart.tsx
+src/main/webapp/app/entities/cart/cart-update.tsx

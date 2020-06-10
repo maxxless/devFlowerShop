@@ -15,6 +15,7 @@ import com.team.flowershop.web.rest.errors.InvalidPasswordException
 import com.team.flowershop.web.rest.errors.LoginAlreadyUsedException
 import com.team.flowershop.web.rest.vm.KeyAndPasswordVM
 import com.team.flowershop.web.rest.vm.ManagedUserVM
+import java.time.Instant
 import javax.servlet.http.HttpServletRequest
 import javax.transaction.Transactional
 import javax.validation.Valid
@@ -25,7 +26,6 @@ import javax.validation.constraints.Size
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.time.Instant
 
 /**
  * REST controller for managing the current user's account.

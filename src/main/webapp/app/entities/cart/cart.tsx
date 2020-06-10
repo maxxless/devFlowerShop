@@ -30,7 +30,7 @@ export const Cart = (props: ICartProps) => {
   return (
     <div>
       <h2>
-        Total price: {cartDetails.finalPrice}. (With discount {cartDetails.totalPriceWithoutDiscount})
+        Final price: {cartDetails.finalPrice}. (Price without discount {cartDetails.totalPriceWithoutDiscount})
         <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
           <FontAwesomeIcon icon="plus" />
           &nbsp; Create Order
